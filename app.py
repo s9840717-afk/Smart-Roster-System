@@ -12,7 +12,7 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 
 def load_data():
     try:
-        df = conn.read(worksheet="工作表1", ttl="0s")
+        df = conn.read(worksheet="Sheet1", ttl="0s")
         if df is not None and not df.empty:
             df['日期'] = pd.to_datetime(df['日期']).dt.date
         return df
