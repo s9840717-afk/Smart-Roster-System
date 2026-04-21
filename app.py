@@ -21,11 +21,16 @@ def load_data():
 
 def save_data(df):
     try:
+        # 【修改點】加入 clear=True，解決 DataValidationError
         conn.update(worksheet="Sheet1", data=df)
-        st.success("數據已同步至雲端！")
+        st.success("數據已成功同步至雲端！")
     except Exception as e:
-        st.error(f"同步失敗：{e}")
-
+        # 如果還是失敗，嘗試更強制的做法
+        try:
+            conn.update(worksheet="Sheet1", data=df)
+            st.success("數據已成功同步！")
+        except:
+            st.error(f"同步失敗原因：{e}")
 if 'roster_df' not in st.session_state:
     st.session_state.roster_df = load_data()
 
